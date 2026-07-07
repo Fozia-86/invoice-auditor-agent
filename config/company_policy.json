@@ -1,0 +1,30 @@
+{
+  "company_name": "Acme Corp",
+  "department": "Finance",
+  "expense_policies": {
+    "hardware": {
+      "max_limit_usd": 2000.0,
+      "requires_approval_above": 1000.0,
+      "allowed_vendors": ["TechStore", "ComputeWorld", "OfficeSupplies Inc"]
+    },
+    "software": {
+      "max_limit_usd": 500.0,
+      "requires_approval_above": 200.0,
+      "allowed_vendors": ["CloudServices", "SoftwareHub"]
+    },
+    "travel": {
+      "max_limit_usd": 1500.0,
+      "requires_approval_above": 500.0,
+      "allowed_vendors": ["SkyAirlines", "CityHotel"]
+    },
+    "general": {
+      "max_limit_usd": 150.0,
+      "requires_approval_above": 50.0,
+      "allowed_vendors": ["ANY"]
+    }
+  },
+  "blocked_vendors": [
+    "ShadyElectronics",
+    "UnknownSeller"
+  ]
+}

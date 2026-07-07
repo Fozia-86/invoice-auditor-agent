@@ -1,0 +1,75 @@
+# ============================================================================
+# agent.toml — Deployment Manifest for Invoice Auditor Agent
+# ============================================================================
+
+[agent]
+name = "invoice-auditor-agent"
+version = "0.1.0"
+entrypoint = "src.main:start_agent"
+description = "A production-grade Multi-Agent AI system for invoice auditing and autonomous settlement using ADK, MCP, AP2, and UCP protocols."
+
+[environments]
+type = "managed-sandbox"
+
+[model]
+name = "gemini-2.0-flash"
+retry_attempts = 3
+
+[runtime]
+deployment_target = "agent_runtime"
+region = "us-east1"  # Error log ke mutabiq us-east1 par align kar diya hai
+
+[protocols]
+a2a = true     # Agent-to-Agent communication (Extractor ↔ Auditor)
+mcp = true     # Model Context Protocol (company_policy.json reader)
+ap2 = true     # Agent Payments Protocol (VDC mandate issuance)
+ucp = true     # Universal Commerce Protocol (vendor checkout verification)
+
+[agents.extractor]
+module = "src.agents.extractor"
+name = "extractor_agent"
+role = "Data Extractor — processes raw invoices via Gemini multimodal"
+
+[agents.auditor]
+module = "src.agents.auditor"
+name = "compliance_auditor"
+role = "Compliance Auditor — validates against MCP policy, UCP verification, AP2 mandates"
+
+[tools.mcp_server]
+module = "src.tools.mcp_server"
+function = "get_company_policy"
+description = "Fetches enterprise expense rules and spending caps from config/company_policy.json via MCP"
+
+[tools.ap2_payment]
+module = "src.tools.ap2_payment"
+function = "issue_vdc_mandate"
+description = "Issues cryptographically signed VDC mandates via Agent Payments Protocol (AP2)"
+
+[tools.ucp_commerce]
+module = "src.tools.ucp_commerce"
+function = "verify_vendor_checkout"
+description = "Verifies vendor checkout state via Universal Commerce Protocol (UCP)"
+
+[environment]
+GOOGLE_CLOUD_PROJECT = "grand-strand-477913-g6"  
+GOOGLE_CLOUD_LOCATION = "us-east1"               # Runtime region se match kar diya
+GCS_INVOICE_BUCKET = "invoice-auditor-agent-bucket"  
+FIRESTORE_COLLECTION = "database"
+BIGQUERY_DATASET = "finance_audit"
+BIGQUERY_TABLE = "audit-logs"
+LOGS_BUCKET_NAME="invoice-auditor-agent-bucket"
+
+[cloud_resources]
+
+[cloud_resources.gcs]
+purpose = "Invoice file ingestion (raw PDFs/images)"
+bucket = "invoice-auditor-agent-bucket"
+
+[cloud_resources.firestore]
+purpose = "Transaction state tracking and audit logs"
+collection = "transactions"
+
+[cloud_resources.bigquery]
+purpose = "Final audited ledger analytics and historical records"
+dataset = "finance_audit"
+table = "ledger_stream"

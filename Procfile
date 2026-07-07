@@ -1,0 +1,1 @@
+web: streamlit run app.py --server.port=$PORT --server.address=[IP_ADDRESS]
