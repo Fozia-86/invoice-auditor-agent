@@ -1,67 +1,77 @@
-# Smart Invoice Auditor & Autonomous Settlement Agent
+# 📋 Smart Invoice Auditor & Autonomous Settlement Agent
 
-A production-grade, cloud-deployed **Multi-Agent AI system** built with the Google Agent Development Kit (ADK) and deployed via the Agents CLI to the Agent Runtime environment.
+A production-grade, cloud-deployed **Multi-Agent AI system** built with the Google Agent Development Kit (ADK) and deployed via the Agents CLI to the Agent Runtime environment for the **Kaggle 5-Day AI Agents Intensive (July 2026)**.
 
-## What It Does
+---
 
-This system serves **small-to-medium businesses (SMBs)** and corporate finance departments by:
+## 🚀 Live Project Links
+* **Live Agent Runtime / App URL:** [👉 Click Here to View Live Project](https://invoice-auditor-agent-985903483121.us-east1.run.app/)
+* **Video Demo Walkthrough:** [🎬 Watch Video Walkthrough](https://drive.google.com/file/d/1o9ZYD4vni4Upyv4-6e-7o4u7U4SfuNpy/view?usp=sharing)
+* **Kaggle Notebook Repository:** [📓 View Project Notebook on Kaggle](https://www.kaggle.com/code/fozia86/smart-ai-invoice-auditor-capstone-project-adk))
 
-1. **Ingesting** raw invoices (images/PDFs) from Google Cloud Storage (GCS)
-2. **Extracting** structured transaction data using multimodal Gemini models
-3. **Auditing** compliance against enterprise policies via Model Context Protocol (MCP)
-4. **Verifying** vendor checkout state via Universal Commerce Protocol (UCP)
-5. **Executing** secure payments via Agent Payments Protocol (AP2) with cryptographically signed mandates
-6. **Logging** all operations to Google Cloud Firestore and streaming final ledger to BigQuery
+---
 
-## Architecture
+## 💡 What It Does
 
-```
+This system serves **small-to-medium businesses (SMBs)** and corporate finance departments by automating the entire procurement invoice lifecycle through cooperative AI agents:
+
+1. **Ingesting:** Raw invoices (images/PDFs) are fetched from Google Cloud Storage (GCS).
+2. **Extracting:** Structured transaction metadata is extracted using multimodal Gemini models.
+3. **Auditing:** Compliance is audited against granular enterprise policies via Model Context Protocol (MCP).
+4. **Verifying:** Vendor checkout states are validated via the Universal Commerce Protocol (UCP).
+5. **Executing:** Secure, cryptographically signed payment mandates are generated via Agent Payments Protocol (AP2).
+6. **Logging:** All operations are tracked in Google Cloud Firestore and streamed to BigQuery for advanced ledger analytics.
+
+## 🏗️ Architecture Diagram
 ┌─────────────────────────────────────────────────────────┐
-│                   Agent Runtime (Cloud)                  │
+│                 Agent Runtime (Cloud)                   │
 │                                                         │
 │  ┌──────────────┐   A2A Protocol   ┌─────────────────┐  │
-│  │  Extractor    │ ──────────────► │  Compliance      │  │
-│  │  Agent        │  Structured     │  Auditor Agent   │  │
-│  │  (Gemini      │  JSON Handoff   │                  │  │
-│  │   Multimodal) │                 │  ┌─────────────┐ │  │
+│  │  Extractor   │ ──────────────► │  Compliance     │  │
+│  │  Agent      │  Structured     │  Auditor Agent  │  │
+│  │  (Gemini     │  JSON Handoff   │                 │  │
+│  │   Multimodal)│                 │  ┌─────────────┐ │  │
 │  └──────┬───────┘                 │  │ MCP Server  │ │  │
-│         │                          │  │ (Policy)    │ │  │
-│         │                          │  ├─────────────┤ │  │
-│    GCS Bucket                      │  │ UCP Tool    │ │  │
-│    (Invoices)                      │  │ (Vendor)    │ │  │
-│                                    │  ├─────────────┤ │  │
-│                                    │  │ AP2 Tool    │ │  │
-│                                    │  │ (Payments)  │ │  │
-│                                    │  └─────────────┘ │  │
-│                                    └────────┬────────┘  │
-│                                             │           │
-│                    ┌────────────────────────┼──────┐    │
-│                    │         Cloud Sync      │      │    │
-│                    │                         ▼      │    │
-│                    │  Firestore ◄──── Audit Log     │    │
-│                    │  BigQuery  ◄──── Ledger Stream  │    │
-│                    └────────────────────────────────┘    │
+│         │                         │  │ (Policy)    │ │  │
+│         │                         │  ├─────────────┤ │  │
+│    GCS Bucket                     │  │ UCP Tool    │ │  │
+│    (Invoices)                     │  │ (Vendor)    │ │  │
+│                                   │  ├─────────────┤ │  │
+│                                   │  │ AP2 Tool    │ │  │
+│                                   │  │ (Payments)  │ │  │
+│                                   │  └─────────────┘ │  │
+│                                   └────────┬────────┘  │
+│                                            │            │
+│                    ┌───────────────────────┼──────┐     │
+│                    │         Cloud Sync    │      │     │
+│                    │                       ▼      │     │
+│                    │  Firestore ◄──── Audit Log   │     │
+│                    │  BigQuery  ◄──── Ledger Stream    │     │
+│                    └──────────────────────────────┘     │
 └─────────────────────────────────────────────────────────┘
-```
 
-## Technology Stack
+---
+
+## 🛠️ Technology Stack
 
 | Technology | Purpose |
 |------------|---------|
-| **Agent Development Kit (ADK)** | Framework for building agent personas and defining skills |
-| **Gemini (Multimodal)** | AI model for extracting data from invoice images/PDFs |
-| **Agent-to-Agent (A2A) Protocol** | Secure communication between Extractor and Auditor agents |
+| **Agent Development Kit (ADK)** | Framework for building agent personas and defining cognitive skills |
+| **Gemini (Multimodal)** | Foundation model for deep extraction from raw invoice images/PDFs |
+| **Agent-to-Agent (A2A) Protocol** | Secure structured JSON communication between Extractor and Auditor agents |
 | **Model Context Protocol (MCP)** | Grounding the Auditor with live enterprise rules from `config/company_policy.json` |
-| **Agent Payments Protocol (AP2)** | Generating tamper-proof Verifiable Digital Credentials (VDCs) |
-| **Universal Commerce Protocol (UCP)** | Validating vendor checkout lifecycles |
-| **Google Cloud Storage (GCS)** | Invoice file ingestion bucket |
-| **Google Cloud Firestore** | Transaction state tracking and audit logs |
-| **Google BigQuery** | Centralized data warehouse for audited ledger analytics |
-| **Agents CLI & Agent Runtime** | Deployment pipeline to cloud-managed service |
+| **Agent Payments Protocol (AP2)** | Generating tamper-proof Verifiable Digital Credentials (VDCs) for settlement |
+| **Universal Commerce Protocol (UCP)** | Validating real-time vendor checkout lifecycles |
+| **Google Cloud Storage (GCS)** | Serverless invoice file ingestion storage layer |
+| **Google Cloud Firestore** | NoSQL transactional state tracking and operational audit logs |
+| **Google BigQuery** | Enterprise data warehouse for streaming analytical ledgers |
+| **Agents CLI & Agent Runtime** | Unified deployment pipeline and managed cloud orchestration service |
 
-## Project Structure
+---
 
-```
+## 📂 Project Structure
+
+```text
 invoice-auditor-agent/
 │
 ├── config/
@@ -88,17 +98,13 @@ invoice-auditor-agent/
 ├── agents-cli-manifest.yaml      # Agents CLI project configuration
 ├── requirements.txt              # Project library dependencies
 ├── pyproject.toml                # Python project configuration
-└── README.md                     # This file
-```
+└── README.md                     # This documentation file
+⚙️ How It Works — Step by Step
+1. Invoice Ingestion
+Raw invoice documents are uploaded directly into a secure Google Cloud Storage bucket to trigger the orchestration framework.
 
-## How It Works — Step by Step
-
-### 1. Invoice Ingestion
-Raw invoice files (images/PDFs) are uploaded to a **Google Cloud Storage** bucket.
-
-### 2. Data Extraction (Extractor Agent)
-The **Extractor Agent** uses **Gemini's multimodal** capabilities to process the raw invoice and output structured JSON:
-```json
+2. Intelligent Data Extraction
+The Extractor Agent leverages Gemini's multimodal parsing capabilities to interpret the document and transform unstructured assets into highly validated JSON structures:
 {
   "invoice_id": "INV-2026-993",
   "vendor": "TechStore",
@@ -106,22 +112,25 @@ The **Extractor Agent** uses **Gemini's multimodal** capabilities to process the
   "line_items": [{"description": "MacBook Pro M4", "amount": 149.99}],
   "total_amount_usd": 149.99
 }
-```
 
-### 3. Compliance Audit (Auditor Agent)
-The **Compliance Auditor** receives the extracted data via **A2A Protocol** and:
+3. Compliance & Settlement Audit
+The Compliance Auditor Agent intercepts the payload via the secure A2A Protocol loop and evaluates operational rules:
 
-- **MCP Check**: Fetches enterprise spending limits from `config/company_policy.json`
-- **UCP Verification**: Validates the vendor's checkout state via UCP endpoint
-- **AP2 Execution**: Issues a cryptographically signed payment mandate (VDC) if compliant
+MCP Evaluation: Queries the business context to dynamically parse constraints inside config/company_policy.json.
 
-### 4. Cloud Sync
-- **Firestore**: Logs the transaction state and audit results
-- **BigQuery**: Streams the final audited ledger for analytics
+UCP Verification: Connects to the active trade network ledger to verify vendor clearance fields.
 
-### 5. Final Output
-The system returns a unified execution ledger block:
-```json
+AP2 Settlement Execution: Signs and issues a cryptographically secure Verifiable Digital Credential (VDC) automated mandate if all parameters clear compliance.
+
+4. Cloud Sync & Telemetry
+Simultaneously, the pipeline streams states down to the persistence layers:
+
+Firestore: Updates the immediate operational transaction logs.
+
+BigQuery: Injects analytics blocks into rows for reporting dashboards.
+
+5. Final Engine Output Block
+The orchestration process outputs a final execution block structured as follows:
 {
   "deployment_telemetry": {
     "agent_id": "adk-invoice-auditor-prod-86",
@@ -137,47 +146,42 @@ The system returns a unified execution ledger block:
     "bigquery_stream": {"status": "SUCCESS"}
   }
 }
-```
 
-## Setup & Installation
+Setup & Installation
+Prerequisites
+Python 3.11+
 
-### Prerequisites
-- Python 3.11+
-- Google Cloud account with enabled APIs
-- Agents CLI (`uv tool install google-agents-cli`)
+Active Google Cloud Account with required APIs enabled
 
-### Install Dependencies
-```bash
+Agents CLI (uv tool install google-agents-cli)
+
+Install Dependencies
+Bash
 uv sync
-```
-
-### Configure Environment
-```bash
-# Copy and fill in your credentials
+Configure Environment
+Bash
+# Copy the placeholder environment file
 cp .env.example .env
-# Edit .env with your Google Cloud Project ID, Gemini API key, etc.
-```
-
-### Run Locally
-```bash
-# Interactive playground
+# Open and configure .env with your Project ID, Gemini API Keys, and Service accounts
+Local Playground Testing
+Bash
+# Launch interactive agent playground
 agents-cli playground
 
-# Or run the test script
+# Or execute the standard test suite script directly
 uv run python test_run.py
-```
-
-### Deploy to Agent Runtime
-```bash
+Deploy to Agent Runtime Production
+Bash
 agents-cli deploy --region us-east1
-```
+🔒 Hard Production Constraints
+Zero Hardcoded Secrets: All system credentials, keys, and endpoints are securely injected exclusively using externalized runtime environments.
 
-## Hard Constraints
+Strict Boundary Mandates: AP2 micro-payment authorization parameters are dynamically restricted to match verified invoice ledger quantities.
 
-- **Zero Hardcoded Secrets**: All credentials injected via environment variables
-- **Strict Boundary Mandates**: AP2 payment credentials must match extracted invoice totals
-- **Cloud-Managed Production**: Final system runs as persistent Agent Runtime service, not local scripts
+Cloud-Managed Execution: The live architecture is deployed as a persistent, autonomous cloud-native service rather than transient local task runners.
 
-## License
+📄 License
+This project was successfully designed and compiled as a Capstone Project for the official Kaggle 5-Day AI Agents Intensive course. All rights reserved.
+---
 
-This project was built as part of the Kaggle AI Agents course capstone project.
+## 🏗️ Architecture Diagram
